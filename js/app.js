@@ -1,58 +1,66 @@
-function builBoard() {
-    game.innerHTML = "";
-  
-    for (let i = 0; i < board.length; i++) {
-      const element = board[i];
-      let row = document.createElement("div"); // create div for each row
-      row.setAttribute("class", "row");
-  
-      for (let j = 0; j < element.length; j++) {
-        const elmt = element[j];
-        let col = document.createElement("div"); 
-        let piece = document.createElement("div");
-        let caseType = "";
-        let occupied = "";
-  
-        if (i % 2 === 0) {
-          if (j % 2 === 0) {
-            caseType = "Whitecase";
-          } else {
-            caseType = "blackCase";
-          }
+function buildBoard() {
+  // Clear the game board
+  game.innerHTML = "";
+
+  // Iterate over the board array
+  for (let i = 0; i < board.length; i++) {
+    // Create a div for each row
+    const row = document.createElement("div");
+    row.setAttribute("class", "row");
+
+    // Iterate over the elements in the current row
+    for (let j = 0; j < board[i].length; j++) {
+      // Create a div for each column
+      const column = document.createElement("div");
+      column.setAttribute("class", "column");
+
+      // Create a div for each piece
+      const piece = document.createElement("div");
+      piece.setAttribute("class", "piece");
+
+      // Set the case type based on the row and column indices
+      let caseType;
+      if (i % 2 === 0) {
+        if (j % 2 === 0) {
+          caseType = "whiteCase";
         } else {
-          if (j % 2 !== 0) {
-            caseType = "Whitecase";
-          } else {
-            caseType = "blackCase";
-          }
+          caseType = "blackCase";
         }
-  
-        // add the piece if the case isn't empty
-        if (board[i][j] === 1) {
-          occupied = "whitePiece";
-        } else if (board[i][j] === -1) {
-          occupied = "blackPiece";
+      } else {
+        if (j % 2 !== 0) {
+          caseType = "whiteCase";
         } else {
-          occupied = "empty";
+          caseType = "blackCase";
         }
-  
-        piece.setAttribute("class", "occupied " + occupied);
-  
-        // set row and colum in the case
-        piece.setAttribute("row", i);
-        piece.setAttribute("column", j);
-        piece.setAttribute("data-position", i + "-" + j);
-  
-        //add event listener to each piece
-        piece.addEventListener("click", movePiece);
-  
-        col.appendChild(piece);
-  
-        col.setAttribute("class", "column " + caseType);
-        row.appendChild(col);
-  
       }
-  
-      game.appendChild(row);
+
+      // Set the occupied status of the piece
+      let occupied;
+      if (board[i][j] === 1) {
+        occupied = "whitePiece";
+      } else if (board[i][j] === -1) {
+        occupied = "blackPiece";
+      } else {
+        occupied = "empty";
+      }
+
+      // Set the attributes of the piece
+      piece.setAttribute("row", i);
+      piece.setAttribute("column", j);
+      piece.setAttribute("data-position", `${i}-${j}`);
+      piece.classList.add(occupied, caseType);
+
+      // Add an event listener to the piece
+      piece.addEventListener("click", movePiece);
+
+      // Append the piece to the column
+      column.appendChild(piece);
+
+      // Append the column to the row
+      row.appendChild(column);
     }
+
+    // Append the row to the game board
+    game.appendChild(row);
   }
+}

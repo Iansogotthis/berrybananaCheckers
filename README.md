@@ -1,1 +1,2 @@
 need to tie the DOM into the JS
+currently  builds a chessboard and adds event listeners to each piece. The function creates a div for each row and column, and then adds a piece to each square. The piece is given a class name based on its color (white or black) and whether it is occupied. The function also sets the row and column attributes of each piece, and adds an event listener to each piece that calls the  movePiece  function when clicked. 
