@@ -64,3 +64,95 @@ function buildBoard() {
     game.appendChild(row);
   }
 }
+function movePiece(event) {
+  // Get the current position of the piece being moved
+  const piece = event.target;
+  const currentRow = parseInt(piece.getAttribute("row"));
+  const currentColumn = parseInt(piece.getAttribute("column"));
+
+  // Get the position of the square that the piece is being moved to
+  const targetSquare = event.currentTarget;
+  const targetRow = parseInt(targetSquare.getAttribute("row"));
+  const targetColumn = parseInt(targetSquare.getAttribute("column"));
+
+  // Check if the move is valid
+  if (isValidMove(currentRow, currentColumn, targetRow, targetColumn)) {
+    // Update the board array to reflect the new positions of the pieces
+    board[currentRow][currentColumn] = 0;
+    board[targetRow][targetColumn] = 1;
+
+    // Update the game board UI to reflect the new positions of the pieces
+    piece.setAttribute("row", targetRow);
+    piece.setAttribute("column", targetColumn);
+    targetSquare.appendChild(piece);
+  }
+}
+// Function to move a piece
+function movePiece(event) {
+  // Check if it is the current player's turn
+  if (currentPlayer === 1) {
+    // Allow the player to make the move
+    // ...
+  } else {
+    // Display an error message to the user
+    alert("It is not your turn.");
+  }
+
+  // Switch the current player's turn
+  currentPlayer = currentPlayer === 1 ? 2 : 1;
+
+  // Display the current player's turn to the user
+  document.getElementById("currentPlayer").innerHTML = `Current player: ${currentPlayer}`;
+}
+function movePiece(event) {
+  // Check if it is the current player's turn
+  if (currentPlayer === 1) {
+    // Get the current position of the piece being moved
+    const piece = event.target;
+    const currentRow = parseInt(piece.getAttribute("row"));
+    const currentColumn = parseInt(piece.getAttribute("column"));
+
+    // Get the position of the square that the piece is being moved to
+    const targetSquare = event.currentTarget;
+    const targetRow = parseInt(targetSquare.getAttribute("row"));
+    const targetColumn = parseInt(targetSquare.getAttribute("column"));
+
+    // Check if the move is valid
+    if (isValidMove(currentRow, currentColumn, targetRow, targetColumn)) {
+      // Update the board array to reflect the new positions of the pieces
+      board[currentRow][currentColumn] = 0;
+      board[targetRow][targetColumn] = 1;
+
+      // Update the game board UI to reflect the new positions of the pieces
+      piece.setAttribute("row", targetRow);
+      piece.setAttribute("column", targetColumn);
+      targetSquare.appendChild(piece);
+
+      // Switch the current player's turn
+      currentPlayer = 2;
+
+      // Display the current player's turn to the user
+      document.getElementById("currentPlayer").innerHTML = `Current player: ${currentPlayer}`;
+    } else {
+      // Display an error message to the user
+      alert("Invalid move. Please try again.");
+    }
+  } else {
+    // Display an error message to the user
+    alert("It is not your turn.");
+  }
+}
+/*am here
+
+function isValidMove(currentRow, currentColumn, targetRow, targetColumn) {
+  isValidMove()  // Return true if the move is valid, false otherwise
+  // You can use the current state of the board array to validate the move
+  // For example, check if the target position is empty and if the move follows the rules of the game
+  // Modify this function according to your specific game rules and requirements
+
+  // Placeholder comment for move validation logic
+  // ...
+
+  return true; // Placeholder return statement
+}
+*/
