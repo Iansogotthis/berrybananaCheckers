@@ -15,3 +15,6 @@ function isValidMove(currentRow, currentColumn, targetRow, targetColumn) {
   return true; // Placeholder return statement
 }
 */
+
+
+time for the scoring function and the collection function and shortly the render
