@@ -80,29 +80,27 @@ function movePiece(event) {
     // Update the board array to reflect the new positions of the pieces
     board[currentRow][currentColumn] = 0;
     board[targetRow][targetColumn] = 1;
+    if (isGameOver()) {
 
-    // Update the game board UI to reflect the new positions of the pieces
-    piece.setAttribute("row", targetRow);
-    piece.setAttribute("column", targetColumn);
-    targetSquare.appendChild(piece);
+      alert(`Game over. Player ${currentPlayer === 1 ? 2 : 1} wins.`)
+      const playAgain = confirm("Do you want to play again?");
+      if (playAgain) {
+        // If they accept, reset the game board and the current player
+        board = createInitialBoard(); // You need to implement this function
+        currentPlayer = 1;
+        buildBoard();
+      }
+    } else {
+      // If the game is not over, switch the current player's turn
+      currentPlayer = currentPlayer === 1 ? 2 : 1;
+
+      // Update the game board UI to reflect the new positions of the pieces
+      piece.setAttribute("row", targetRow);
+      piece.setAttribute("column", targetColumn);
+      targetSquare.appendChild(piece);
+    }
   }
-}
-// Function to move a piece
-function movePiece(event) {
-  // Check if it is the current player's turn
-  if (currentPlayer === 1) {
-    // Allow the player to make the move
-    // ...
-  } else {
-    // Display an error message to the user
-    alert("It is not your turn.");
-  }
 
-  // Switch the current player's turn
-  currentPlayer = currentPlayer === 1 ? 2 : 1;
-
-  // Display the current player's turn to the user
-  document.getElementById("currentPlayer").innerHTML = `Current player: ${currentPlayer}`;
 }
 function movePiece(event) {
   // Check if it is the current player's turn
@@ -122,6 +120,23 @@ function movePiece(event) {
       // Update the board array to reflect the new positions of the pieces
       board[currentRow][currentColumn] = 0;
       board[targetRow][targetColumn] = 1;
+      if (isGameOver()) {
+        // If the game is over, display a message to the users
+        alert(`Game over. Player ${currentPlayer === 1 ? 2 : 1} wins.`);
+
+        // Offer the users to start a new game
+        const playAgain = confirm("Do you want to play again?");
+        if (playAgain) {
+          // If they accept, reset the game board and the current player
+          board = createInitialBoard(); // You need to implement this function
+          currentPlayer = 1;
+          buildBoard();
+        }
+      } else {
+        // If the game is not over, switch the current player's turn
+        currentPlayer = currentPlayer === 1 ? 2 : 1;
+      }
+
 
       // Update the game board UI to reflect the new positions of the pieces
       piece.setAttribute("row", targetRow);
@@ -143,12 +158,52 @@ function movePiece(event) {
   }
 }
 /*am here*/
-
 function isValidMove(currentRow, currentColumn, targetRow, targetColumn) {
   // Check if the target position is empty
-  if (board[targetRow][targetColumn] === 0) {
-    return true;
-  } else {
+  if (board[targetRow][targetColumn] !== 0) {
     return false;
   }
+
+  // Check if the move is diagonal
+  if (Math.abs(targetRow - currentRow) !== Math.abs(targetColumn - currentColumn)) {
+    return false;
+  }
+
+  // Check if the piece is jumping over another piece
+  const middleRow = (currentRow + targetRow) / 2;
+  const middleColumn = (currentColumn + targetColumn) / 2;
+  if (board[middleRow][middleColumn] !== 0) {
+    // If it is, check if the jumped piece belongs to the opponent
+    if (board[middleRow][middleColumn] !== -currentPlayer) {
+      return false;
+    }
+  }
+
+  // If all checks pass, the move is valid
+  return true;
+
+}
+
+
+function isGameOver() {
+  // Iterate over the entire board
+  for (let i = 0; i < board.length; i++) {
+    for (let j = 0; j < board[i].length; j++) {
+      // Check if the piece belongs to the current player
+      if (board[i][j] === currentPlayer) {
+        // Check for any valid moves
+        for (let rowDiff = -1; rowDiff <= 1; rowDiff++) {
+          for (let colDiff = -1; colDiff <= 1; colDiff++) {
+            if (isValidMove(i, j, i + rowDiff, j + colDiff)) {
+              // If a valid move is found, the game is not over
+              return false;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // If no valid moves are found, the game is over
+  return true;
 }
