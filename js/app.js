@@ -142,17 +142,13 @@ function movePiece(event) {
     alert("It is not your turn.");
   }
 }
-/*am here
+/*am here*/
 
 function isValidMove(currentRow, currentColumn, targetRow, targetColumn) {
-  isValidMove()  // Return true if the move is valid, false otherwise
-  // You can use the current state of the board array to validate the move
-  // For example, check if the target position is empty and if the move follows the rules of the game
-  // Modify this function according to your specific game rules and requirements
-
-  // Placeholder comment for move validation logic
-  // ...
-
-  return true; // Placeholder return statement
+  // Check if the target position is empty
+  if (board[targetRow][targetColumn] === 0) {
+    return true;
+  } else {
+    return false;
+  }
 }
-*/
