@@ -1,3 +1,32 @@
+// Define the game board and current player variables
+let board = createInitialBoard();
+let currentPlayer = 1;
+
+// Get the game board element
+const game = document.getElementById("game"); cal
+const WHITE_KING = 2;
+const BLACK_KING = -2;
+
+
+
+// Build the game board
+buildBoard();
+
+// Function to create the initial game board
+function createInitialBoard() {
+  return [
+    [0, -1, 0, -1, 0, -1, 0, -1],
+    [-1, 0, -1, 0, -1, 0, -1, 0],
+    [0, -1, 0, -1, 0, -1, 0, -1],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 1, 0, 1, 0, 1, 0],
+    [0, 1, 0, 1, 0, 1, 0, 1],
+    [1, 0, 1, 0, 1, 0, 1, 0]
+  ];
+}
+
+// Function to build the game board
 function buildBoard() {
   // Clear the game board
   game.innerHTML = "";
@@ -40,7 +69,13 @@ function buildBoard() {
         occupied = "whitePiece";
       } else if (board[i][j] === -1) {
         occupied = "blackPiece";
-      } else {
+      } else if(board[i][j]=== BLACK_KING){
+        occupied = "king_b";
+      }
+      else if(board[i][j]=== WHITE_KING){
+        occupied = "king_r";
+        
+      }else{
         occupied = "empty";
       }
 
@@ -64,44 +99,8 @@ function buildBoard() {
     game.appendChild(row);
   }
 }
-function movePiece(event) {
-  // Get the current position of the piece being moved
-  const piece = event.target;
-  const currentRow = parseInt(piece.getAttribute("row"));
-  const currentColumn = parseInt(piece.getAttribute("column"));
 
-  // Get the position of the square that the piece is being moved to
-  const targetSquare = event.currentTarget;
-  const targetRow = parseInt(targetSquare.getAttribute("row"));
-  const targetColumn = parseInt(targetSquare.getAttribute("column"));
-
-  // Check if the move is valid
-  if (isValidMove(currentRow, currentColumn, targetRow, targetColumn)) {
-    // Update the board array to reflect the new positions of the pieces
-    board[currentRow][currentColumn] = 0;
-    board[targetRow][targetColumn] = 1;
-    if (isGameOver()) {
-
-      alert(`Game over. Player ${currentPlayer === 1 ? 2 : 1} wins.`)
-      const playAgain = confirm("Do you want to play again?");
-      if (playAgain) {
-        // If they accept, reset the game board and the current player
-        board = createInitialBoard(); // You need to implement this function
-        currentPlayer = 1;
-        buildBoard();
-      }
-    } else {
-      // If the game is not over, switch the current player's turn
-      currentPlayer = currentPlayer === 1 ? 2 : 1;
-
-      // Update the game board UI to reflect the new positions of the pieces
-      piece.setAttribute("row", targetRow);
-      piece.setAttribute("column", targetColumn);
-      targetSquare.appendChild(piece);
-    }
-  }
-
-}
+// Function to handle piece movement
 function movePiece(event) {
   // Check if it is the current player's turn
   if (currentPlayer === 1) {
@@ -128,7 +127,7 @@ function movePiece(event) {
         const playAgain = confirm("Do you want to play again?");
         if (playAgain) {
           // If they accept, reset the game board and the current player
-          board = createInitialBoard(); // You need to implement this function
+          board = createInitialBoard();
           currentPlayer = 1;
           buildBoard();
         }
@@ -137,14 +136,20 @@ function movePiece(event) {
         currentPlayer = currentPlayer === 1 ? 2 : 1;
       }
 
-
       // Update the game board UI to reflect the new positions of the pieces
       piece.setAttribute("row", targetRow);
       piece.setAttribute("column", targetColumn);
       targetSquare.appendChild(piece);
+      // Update the board array to reflect the new positions of the pieces
+      board[currentRow][currentColumn] = 0;
+      board[targetRow][targetColumn] = currentPlayer;
 
-      // Switch the current player's turn
-      currentPlayer = 2;
+      // Check for king promotion
+      if ((currentPlayer === 1 && targetRow === 0) || (currentPlayer === -1 && targetRow === board.length - 1)) {
+        // The piece has reached the other side of the board, promote it to a king
+        board[targetRow][targetColumn] = currentPlayer * 2;
+      }
+
 
       // Display the current player's turn to the user
       document.getElementById("currentPlayer").innerHTML = `Current player: ${currentPlayer}`;
@@ -157,7 +162,8 @@ function movePiece(event) {
     alert("It is not your turn.");
   }
 }
-/*am here*/
+
+// Function to check if a move is valid
 function isValidMove(currentRow, currentColumn, targetRow, targetColumn) {
   // Check if the target position is empty
   if (board[targetRow][targetColumn] !== 0) {
@@ -181,10 +187,9 @@ function isValidMove(currentRow, currentColumn, targetRow, targetColumn) {
 
   // If all checks pass, the move is valid
   return true;
-
 }
 
-
+// Function to check if the game is over
 function isGameOver() {
   // Iterate over the entire board
   for (let i = 0; i < board.length; i++) {
