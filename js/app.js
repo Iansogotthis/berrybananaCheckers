@@ -149,24 +149,6 @@ function movePiece(event) {
         // If the game is not over, switch the current player's turn
         currentPlayer = currentPlayer === 1 ? 2 : 1;
       }
-
-      // Update the game board UI to reflect the new positions of the pieces
-      piece.setAttribute("row", targetRow);
-      piece.setAttribute("column", targetColumn);
-      targetSquare.appendChild(piece);
-      // Update the board array to reflect the new positions of the pieces
-      board[currentRow][currentColumn] = 0;
-      board[targetRow][targetColumn] = currentPlayer;
-
-      // Check for king promotion
-      if ((currentPlayer === 1 && targetRow === 0) || (currentPlayer === -1 && targetRow === board.length - 1)) {
-        // The piece has reached the other side of the board, promote it to a king
-        board[targetRow][targetColumn] = currentPlayer * 2;
-      }
-
-
-      // Display the current player's turn to the user
-      document.getElementById("currentPlayer").innerHTML = `Current player: ${currentPlayer}`;
     } else {
       // Display an error message to the user
       alert("Invalid move. Please try again.");
@@ -176,6 +158,7 @@ function movePiece(event) {
     alert("It is not your turn.");
   }
 }
+
 
 // Function to check if a move is valid
 function isValidMove(currentRow, currentColumn, targetRow, targetColumn) {
