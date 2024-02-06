@@ -3,7 +3,7 @@ let board = createInitialBoard();
 let currentPlayer = 1;
 
 // Get the game board element
-const game = document.getElementById("game"); cal
+const game = document.getElementById("game")
 const WHITE_KING = 2;
 const BLACK_KING = -2;
 
