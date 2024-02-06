@@ -3,11 +3,7 @@ let board = createInitialBoard();
 let currentPlayer = 1;
 
 // Get the game board element
-<<<<<<< HEAD
-const game = document.getElementById("game"); 
-=======
 const game = document.getElementById("game"); cal
->>>>>>> refs/remotes/origin/main
 const WHITE_KING = 2;
 const BLACK_KING = -2;
 
@@ -153,8 +149,6 @@ function movePiece(event) {
         // If the game is not over, switch the current player's turn
         currentPlayer = currentPlayer === 1 ? 2 : 1;
       }
-<<<<<<< HEAD
-=======
 
       // Update the game board UI to reflect the new positions of the pieces
       piece.setAttribute("row", targetRow);
@@ -173,7 +167,6 @@ function movePiece(event) {
 
       // Display the current player's turn to the user
       document.getElementById("currentPlayer").innerHTML = `Current player: ${currentPlayer}`;
->>>>>>> refs/remotes/origin/main
     } else {
       // Display an error message to the user
       alert("Invalid move. Please try again.");
@@ -184,10 +177,6 @@ function movePiece(event) {
   }
 }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> refs/remotes/origin/main
 // Function to check if a move is valid
 function isValidMove(currentRow, currentColumn, targetRow, targetColumn) {
   // Check if the target position is empty
