@@ -102,18 +102,18 @@ function buildBoard() {
 
 // Function to handle piece movement
 function movePiece(event) {
+  // Get the current position of the piece being moved
+  const piece = event.target;
+  const currentRow = parseInt(piece.getAttribute("row"));
+  const currentColumn = parseInt(piece.getAttribute("column"));
+
+  // Get the position of the square that the piece is being moved to
+  const targetSquare = event.currentTarget;
+  const targetRow = parseInt(targetSquare.getAttribute("row"));
+  const targetColumn = parseInt(targetSquare.getAttribute("column"));
+
   // Check if it is the current player's turn
   if (currentPlayer === 1) {
-    // Get the current position of the piece being moved
-    const piece = event.target;
-    const currentRow = parseInt(piece.getAttribute("row"));
-    const currentColumn = parseInt(piece.getAttribute("column"));
-
-    // Get the position of the square that the piece is being moved to
-    const targetSquare = event.currentTarget;
-    const targetRow = parseInt(targetSquare.getAttribute("row"));
-    const targetColumn = parseInt(targetSquare.getAttribute("column"));
-    
     // Check if the move is valid
     if (isValidMove(currentRow, currentColumn, targetRow, targetColumn)) {
       // Update the board array to reflect the new positions of the pieces
@@ -123,11 +123,17 @@ function movePiece(event) {
       // Check for king promotion
       if ((currentPlayer === 1 && targetRow === 0) || (currentPlayer === -1 && targetRow === board.length - 1)) {
         // The piece has reached the other side of the board, promote it to a king
-        board[targetRow][targetColumn] = currentPlayer * 2;
+        board[targetRow][targetColumn] = currentPlayer === 1 ? WHITE_KING : BLACK_KING;
       }
 
       // Remove the piece from its original position
-      event.target.parentElement.removeChild(event.target);
+      piece.classList.remove("whitePiece", "blackPiece");
+      piece.classList.add(currentPlayer === 1 ? "whitePiece" : "blackPiece");
+      
+      // Update piece attributes
+      piece.setAttribute("row", targetRow);
+      piece.setAttribute("column", targetColumn);
+      piece.setAttribute("data-position", `${targetRow}-${targetColumn}`);
 
       // Display the current player's turn to the user
       document.getElementById("currentPlayer").innerHTML = `Current player: ${currentPlayer}`;
@@ -158,6 +164,7 @@ function movePiece(event) {
     alert("It is not your turn.");
   }
 }
+
 
 
 // Function to check if a move is valid
