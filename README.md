@@ -19,4 +19,16 @@ function isValidMove(currentRow, currentColumn, targetRow, targetColumn) {
 */
 
 
-time for the scoring function and the collection function and shortly the render
+
+
+Check the HTML: Make sure that your HTML contains an element with the id "game". This is where your game board is being constructed.
+
+Event Listener: Ensure that the movePiece() function is being called when a piece is clicked. If the event listener is not attached properly or if there's an issue with event delegation, the function won't execute.
+
+Console Errors: Check your browser's developer console for any errors. If there are any JavaScript errors, they could be preventing the function from executing correctly.
+
+Debugging: You can add console log statements inside the movePiece() function to see if it's being called and to check the values of variables at various points in the function.
+
+Inspect the DOM: After clicking on a piece, inspect the DOM to see if the piece is being removed from its original position and appended to the target position correctly.
+
+By going through these steps, you should be able to identify the issue and fix it. If you're still having trouble, feel free to provide more details or code snippets, and I'd be happy to assist further.

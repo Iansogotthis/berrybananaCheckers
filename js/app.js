@@ -3,7 +3,11 @@ let board = createInitialBoard();
 let currentPlayer = 1;
 
 // Get the game board element
+<<<<<<< HEAD
 const game = document.getElementById("game"); 
+=======
+const game = document.getElementById("game"); cal
+>>>>>>> refs/remotes/origin/main
 const WHITE_KING = 2;
 const BLACK_KING = -2;
 
@@ -113,13 +117,26 @@ function movePiece(event) {
     const targetSquare = event.currentTarget;
     const targetRow = parseInt(targetSquare.getAttribute("row"));
     const targetColumn = parseInt(targetSquare.getAttribute("column"));
+    
     // Check if the move is valid
     if (isValidMove(currentRow, currentColumn, targetRow, targetColumn)) {
-
-      
       // Update the board array to reflect the new positions of the pieces
       board[currentRow][currentColumn] = 0;
-      board[targetRow][targetColumn] = 1;
+      board[targetRow][targetColumn] = currentPlayer;
+
+      // Check for king promotion
+      if ((currentPlayer === 1 && targetRow === 0) || (currentPlayer === -1 && targetRow === board.length - 1)) {
+        // The piece has reached the other side of the board, promote it to a king
+        board[targetRow][targetColumn] = currentPlayer * 2;
+      }
+
+      // Remove the piece from its original position
+      event.target.parentElement.removeChild(event.target);
+
+      // Display the current player's turn to the user
+      document.getElementById("currentPlayer").innerHTML = `Current player: ${currentPlayer}`;
+
+      // Check for game over condition
       if (isGameOver()) {
         // If the game is over, display a message to the users
         alert(`Game over. Player ${currentPlayer === 1 ? 2 : 1} wins.`);
@@ -136,6 +153,8 @@ function movePiece(event) {
         // If the game is not over, switch the current player's turn
         currentPlayer = currentPlayer === 1 ? 2 : 1;
       }
+<<<<<<< HEAD
+=======
 
       // Update the game board UI to reflect the new positions of the pieces
       piece.setAttribute("row", targetRow);
@@ -154,6 +173,7 @@ function movePiece(event) {
 
       // Display the current player's turn to the user
       document.getElementById("currentPlayer").innerHTML = `Current player: ${currentPlayer}`;
+>>>>>>> refs/remotes/origin/main
     } else {
       // Display an error message to the user
       alert("Invalid move. Please try again.");
@@ -164,6 +184,10 @@ function movePiece(event) {
   }
 }
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> refs/remotes/origin/main
 // Function to check if a move is valid
 function isValidMove(currentRow, currentColumn, targetRow, targetColumn) {
   // Check if the target position is empty
