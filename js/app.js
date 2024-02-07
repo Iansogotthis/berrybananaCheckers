@@ -69,13 +69,13 @@ function buildBoard() {
         occupied = "whitePiece";
       } else if (board[i][j] === -1) {
         occupied = "blackPiece";
-      } else if(board[i][j]=== BLACK_KING){
+      } else if (board[i][j] === BLACK_KING) {
         occupied = "king_b";
       }
-      else if(board[i][j]=== WHITE_KING){
+      else if (board[i][j] === WHITE_KING) {
         occupied = "king_r";
-        
-      }else{
+
+      } else {
         occupied = "empty";
       }
 
@@ -129,7 +129,7 @@ function movePiece(event) {
       // Remove the piece from its original position
       piece.classList.remove("whitePiece", "blackPiece");
       piece.classList.add(currentPlayer === 1 ? "whitePiece" : "blackPiece");
-      
+
       // Update piece attributes
       piece.setAttribute("row", targetRow);
       piece.setAttribute("column", targetColumn);
