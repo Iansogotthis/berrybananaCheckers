@@ -8,8 +8,6 @@ music
 
 
 
-The “Wrong move” prompt is displayed because the isValidMove function returns false for every move. This is because the condition Math.abs(targetRow - currentRow) !== Math.abs(targetColumn - currentColumn) is always true, causing the function to return false.
-To fix this issue, you need to update the condition in the isValidMove function to check if the move is diagonal correctly. Here’s the updated code:
 // Function to check if a move is valid
 function isValidMove(currentRow, currentColumn, targetRow, targetColumn) {
   // Check if the target position is empty
