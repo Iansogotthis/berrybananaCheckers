@@ -27,7 +27,6 @@ function createInitialBoard() {
 buildBoard();
 
 // Function to build the game board
-// Function to build the game board
 function buildBoard() {
   // Clear the game board
   game.innerHTML = "";
@@ -97,7 +96,6 @@ function buildBoard() {
       piece.addEventListener("dragover", dragOver);
       piece.addEventListener("dragenter", dragEnter);
       piece.addEventListener("dragleave", dragLeave);
-      piece.addEventListener("drop", drop);
 
       // Append the piece to the column
       column.appendChild(piece);
@@ -112,7 +110,10 @@ function buildBoard() {
 }
 // Drag event handlers
 function dragStart(event) {
-  event.dataTransfer.setData("text/plain", event.target.id);
+  const piece = event.target;
+  const row = piece.getAttribute("row");
+  const column = piece.getAttribute("column");
+  event.dataTransfer.setData("text/plain", `${row},${column}`);
 }
 
 function dragOver(event) {
@@ -129,65 +130,85 @@ function dragLeave(event) {
 
 function drop(event) {
   event.preventDefault();
+  const [sourceRow, sourceColumn] = event.dataTransfer.getData("text/plain").split(",");
   const data = event.dataTransfer.getData("text/plain");
   const sourcePiece = document.getElementById(data);
-  const targetColumn = event.target;
-
-  // Update the game board based on the move
-  const sourceRow = parseInt(sourcePiece.getAttribute("row"));
-  const sourceColumn = parseInt(sourcePiece.getAttribute("column"));
+  let targetColumn = event.target;
+  if (targetColumn.classList.contains("piece")) {
+    targetColumn = targetColumn.parentElement;
+  }
+  
   const targetRow = parseInt(targetColumn.getAttribute("row"));
   const targetColumnNum = parseInt(targetColumn.getAttribute("column"));
-  const pieceValue = board[sourceRow][sourceColumn];
+  
+/// Validate Move
+  if (isValidMove(parseInt(sourceRow), parseInt(sourceColumn), targetRow, targetColumnNum)) {
+    // Update the board array
+    board[sourceRow][sourceColumn] = 0;
+    board[targetRow][targetColumnNum] = currentPlayer;
 
-  // Update the board array
-  board[sourceRow][sourceColumn] = 0;
-  board[targetRow][targetColumnNum] = pieceValue;
-
-  // Update the classes of the source and target pieces
-  sourcePiece.classList.remove("whitePiece", "blackPiece", "king_b", "king_r");
-  sourcePiece.classList.add("empty");
-
-  // Update the attributes of the target piece
-  targetColumn.firstChild.setAttribute("row", targetRow);
-  targetColumn.firstChild.setAttribute("column", targetColumnNum);
-  targetColumn.firstChild.classList.add(pieceValue === 1 ? "whitePiece" : "blackPiece");
-
-  // Rebuild the board
-  buildBoard();
+    
+    // Update the classes of the source and target pieces
+    sourcePiece.classList.remove("whitePiece", "blackPiece", "king_b", "king_r");
+    sourcePiece.classList.add("empty");
+    
+    // Update the attributes of the target piece
+    sourcePiece.setAttribute("row", targetRow);
+    sourcePiece.setAttribute("column", targetColumnNum);
+    sourcePiece.classList.add(currentPlayer === 1 ? "whitePiece" : "blackPiece");
+    
+    // Rebuild the board
+    buildBoard();
+    
+    // Switch the current player
+    currentPlayer = currentPlayer === 1 ? -1 : 1;
+    document.getElementById("currentPlayer").textContent = `Current player: ${currentPlayer}`;
+    
+    // Check if the game is over
+    if (isGameOver()) {
+      console.log("Game Over");
+    }
+  }
 }
 
-
-// Function to check if a move is valid
 function isValidMove(currentRow, currentColumn, targetRow, targetColumn) {
-
-  // Check if the target position is empt
+  // Check if the target position is empty
   if (board[targetRow][targetColumn] !== 0) {
+    console.log("Target position is not empty");
     return false;
   }
-  console.log(board[targetRow][targetColumn])
+  
   // Check if the move is diagonal
   const rowDiff = Math.abs(targetRow - currentRow);
   const colDiff = Math.abs(targetColumn - currentColumn);
   if (rowDiff !== colDiff) {
+    console.log("Move is not diagonal");
     return false;
   }
-
-
-  // Check if the piece is jumping over another piece
-  const middleRow = (currentRow + targetRow) / 2;
-  const middleColumn = (currentColumn + targetColumn) / 2;
-  if (board[middleRow][middleColumn] !== 0) {
-    // If it is, check if the jumped piece belongs to the opponent
-    if (board[middleRow][middleColumn] !== -currentPlayer) {
+  
+  // Check if the piece is moving in the correct direction
+  const direction = currentPlayer === 1 ? -1 : 1;
+  if (board[currentRow][currentColumn] !== WHITE_KING && board[currentRow][currentColumn] !== BLACK_KING) {
+    if (targetRow - currentRow !== direction) {
+      console.log("Piece is not moving in the correct direction");
       return false;
     }
   }
-
+  
+  // Check if the piece is jumping over another piece
+  const middleRow = Math.floor((currentRow + targetRow) / 2);
+  const middleColumn = Math.floor((currentColumn + targetColumn) / 2);
+  if (board[middleRow][middleColumn] !== 0) {
+    // If it is, check if the jumped piece belongs to the opponent
+    if (board[middleRow][middleColumn] !== -currentPlayer) {
+      console.log("Jumped piece does not belong to the opponent");
+      return false;
+    }
+  }
+  
   // If all checks pass, the move is valid
   return true;
 }
-
 // Function to check if the game is over
 function isGameOver() {
   // Iterate over the entire board
