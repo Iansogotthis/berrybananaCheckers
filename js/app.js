@@ -45,8 +45,7 @@ function buildBoard() {
 
       // Create a div for each piece
       const piece = document.createElement("div");
-      piece.setAttribute("class", "piece");
-
+      piece.setAttribute("class", "piece")
       // Set the case type based on the row and column indices
       let caseType;
       if (i % 2 === 0) {
