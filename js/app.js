@@ -7,8 +7,6 @@ const game = document.getElementById("game")
 const WHITE_KING = 2;
 const BLACK_KING = -2;
 
-
-
 // Build the game board
 buildBoard();
 
@@ -46,6 +44,7 @@ function buildBoard() {
       // Create a div for each piece
       const piece = document.createElement("div");
       piece.setAttribute("class", "piece");
+      
 
       // Set the case type based on the row and column indices
       let caseType;
@@ -74,7 +73,6 @@ function buildBoard() {
       }
       else if (board[i][j] === WHITE_KING) {
         occupied = "king_r";
-
       } else {
         occupied = "empty";
       }
@@ -164,8 +162,6 @@ function movePiece(event) {
     alert("It is not your turn.");
   }
 }
-
-
 
 // Function to check if a move is valid
 function isValidMove(currentRow, currentColumn, targetRow, targetColumn) {
