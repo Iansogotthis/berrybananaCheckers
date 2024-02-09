@@ -144,6 +144,12 @@ function drop(event) {
   board[sourceRow][sourceColumn] = 0;
   board[targetRow][targetColumnNum] = pieceValue;
 
+  // Check for kings
+  const isKing = (pieceValue === 1 && targetRow === 7) || (pieceValue === -1 && targetRow === 0);
+  if (isKing) {
+    board[targetRow][targetColumnNum] *= 2; // Mark the piece as a king
+  }
+
   // Update the classes of the source and target pieces
   sourcePiece.classList.remove("whitePiece", "blackPiece", "king_b", "king_r");
   sourcePiece.classList.add("empty");
@@ -155,9 +161,16 @@ function drop(event) {
 
   // Rebuild the board
   buildBoard();
+
+  // Check for game over
+  if (isGameOver()) {
+    alert(`Game Over! Player ${currentPlayer} has no more valid moves.`);
+  } else {
+    // Switch players if the game is not over
+    currentPlayer *= -1;
+    document.getElementById("currentPlayer").textContent = `Current player: ${currentPlayer}`;
+  }
 }
-
-
 // Function to check if a move is valid
 function isValidMove(currentRow, currentColumn, targetRow, targetColumn) {
 
