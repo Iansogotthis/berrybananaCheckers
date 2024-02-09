@@ -3,7 +3,7 @@ let board = createInitialBoard();
 let currentPlayer = 1;
 
 // Get the game board element
-const game = document.getElementById("game")
+const game = document.getElementById("game");
 const WHITE_KING = 2;
 const BLACK_KING = -2;
 
@@ -155,6 +155,13 @@ function drop(event) {
   if (board[middleRow][middleColumn] !== 0) {
     // If it is, remove the jumped piece from the board
     board[middleRow][middleColumn] = 0;
+
+    // Increment the score of the current player
+    if (currentPlayer === 1) {
+      whiteScore++;
+    } else {
+      blackScore++;
+    }
   }
 
   // Update the board array
@@ -168,7 +175,9 @@ function drop(event) {
   // Update the attributes of the target piece
   targetColumn.firstChild.setAttribute("row", targetRow);
   targetColumn.firstChild.setAttribute("column", targetColumnNum);
-  targetColumn.firstChild.classList.add(pieceValue === 1 ? "whitePiece" : "blackPiece");
+  targetColumn.firstChild.classList.add(
+    pieceValue === 1 ? "whitePiece" : "blackPiece"
+  );
 
   // Rebuild the board
   buildBoard();
@@ -199,7 +208,7 @@ function isValidMove(currentRow, currentColumn, targetRow, targetColumn) {
 
   // Check if the piece is jumping over another piece
   const middleRow = Math.floor((currentRow + targetRow) / 2);
-const middleColumn = Math.floor((currentColumn + targetColumn) / 2);
+  const middleColumn = Math.floor((currentColumn + targetColumn) / 2);
   if (board[middleRow][middleColumn] !== 0) {
     // If it is, check if the jumped piece belongs to the opponent
     if (board[middleRow][middleColumn] !== -currentPlayer) {
@@ -233,6 +242,5 @@ function isGameOver() {
   // If no valid moves are found, the game is over
   return true;
 }
-
 
 // Function to check if the game is won

@@ -2,7 +2,21 @@ body {
     display: flex;
     justify-content: center;
 }
+#whiteScore{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: large;
+    color: yellow;
+    font-weight: bold;
+    background-color: brown;
+}
+#blackScore{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: large;
+    color: orange;
+    font-weight: bold;
+    background-color:brown;
 
+}
 #game {
     border: 3px double rgb(150, 94, 9);
 }
