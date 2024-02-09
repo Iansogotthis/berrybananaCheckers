@@ -6,5 +6,10 @@ How to Play
 click here
 (https://iansogotthis.github.io/berrybananaCheckers/)
 
-to start the game. Click and drag a piece to move it. Only valid moves will be allowed. The current scores are displayed on the page. A player scores a point each time they capture an opponent's piece. Code Structure app.js: This file contains the JavaScript code that controls the game logic. It defines the game board, handles the drag and drop events for moving pieces, checks if a move is valid, and updates the game state. index.html: This file contains the HTML structure of the game board. styles.css: This file contains the CSS styles for the game board and pieces. Future Improvements Add a feature to highlight valid moves when a piece is selected. Implement a simple AI for single player mode. Add animations for piece movements and captures. Improve the UI design for a better gaming experience.
+to start the game. Click and drag a piece to move it. Only valid moves will be allowed. 
+
+
+
+Future updates
+ Implement a simple AI for single player mode. Add animations for piece movements and captures. Improve the UI design for a better gaming experience.
 https://iansogotthis.github.io/berrybananaCheckers/
