@@ -1,15 +1,16 @@
 body {
     display: flex;
     justify-content: center;
+    
 }
-#whiteScore{
+#player1Score{
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     font-size: large;
     color: yellow;
     font-weight: bold;
     background-color: brown;
 }
-#blackScore{
+#player2Score{
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     font-size: large;
     color: orange;
@@ -17,7 +18,15 @@ body {
     background-color:brown;
 
 }
+p{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: large;
+    color:blue;
+    background-color: yellow;
+    height: 12%
+}
 #game {
+    margin: 15px 25px;
     border: 3px double rgb(150, 94, 9);
 }
 
