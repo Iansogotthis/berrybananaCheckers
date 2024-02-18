@@ -1,6 +1,7 @@
 body {
     display: flex;
     justify-content: center;
+    
 }
 #player1Score{
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
@@ -26,6 +27,8 @@ body {
 }
 #game {
     border: 3px double rgb(150, 94, 9);
+    display:flex;
+    justify-content: center
 }
 
 .row {
