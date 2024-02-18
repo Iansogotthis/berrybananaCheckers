@@ -2,14 +2,14 @@ body {
     display: flex;
     justify-content: center;
 }
-#whiteScore{
+#player1Score{
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     font-size: large;
     color: yellow;
     font-weight: bold;
     background-color: brown;
 }
-#blackScore{
+#player2Score{
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     font-size: large;
     color: orange;
