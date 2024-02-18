@@ -26,9 +26,8 @@ body {
     height: 12%
 }
 #game {
+    margin: 15px 25px;
     border: 3px double rgb(150, 94, 9);
-    display:flex;
-    justify-content: center
 }
 
 .row {
