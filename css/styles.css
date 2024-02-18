@@ -17,6 +17,13 @@ body {
     background-color:brown;
 
 }
+#playerTurn{
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: large;
+    color:blue;
+    background-color: yellow;
+    height: 12%
+}
 #game {
     border: 3px double rgb(150, 94, 9);
 }

@@ -200,7 +200,6 @@ function drop(event) {
     pieceValue = BLACK_KING; // Update the piece value
   }
 
-
   // Update the classes of the source and target pieces
   sourcePiece.classList.remove("whitePiece", "blackPiece", "king_b", "king_r");
   sourcePiece.classList.add("empty");
