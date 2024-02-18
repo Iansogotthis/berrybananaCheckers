@@ -175,14 +175,14 @@ function drop(event) {
   // Update the attributes of the target piece
   targetColumn.firstChild.setAttribute("row", targetRow);
   targetColumn.firstChild.setAttribute("column", targetColumnNum);
-  targetColumn.firstChild.classList.add(
-    pieceValue === 1 ? "whitePiece" : "blackPiece"
-  );
+  targetColumn.firstChild.classList.add(pieceValue === 1 ? "whitePiece" : "blackPiece");
+
+  // Switch the current player
+  currentPlayer = -currentPlayer;
 
   // Rebuild the board
   buildBoard();
 }
-
 // Function to check if a move is valid
 function isValidMove(currentRow, currentColumn, targetRow, targetColumn) {
   // Check if the target position is empty

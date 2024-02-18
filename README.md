@@ -9,7 +9,6 @@ If a player's piece reaches the opposite side of the board, it becomes a King. K
 A player can capture an opponent's piece by jumping over it to an empty square on the other side.
 The game ends when a player has no more valid moves, either because all their pieces have been captured or they are blocked from moving.
 
-
 How to Play
 Open the index.html file in a web browser to start the game.
 Click and drag a piece to move it. Only valid moves will be allowed.
